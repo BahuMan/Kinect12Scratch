@@ -12,6 +12,8 @@ namespace bhuylebr.kinect.scratch
     {
         public const string PORTNUMBER = "8000";
         public const string BASEADDRESS = "http://+:" + PORTNUMBER + "/";
+        public const float MAXX = 240.0f;
+        public const float MAXY = 180.0f;
 
         private static IDisposable theServer = null;
         private static MPScratchController ctrl = null;

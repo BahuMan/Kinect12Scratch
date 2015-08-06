@@ -351,7 +351,7 @@ namespace bhuylebr.kinect.scratch
                     {
                         Pen drawPen = this.bodyColors[penIndex++];
 
-                        ScratchWebServer.writeVariable("kinect", bodyCount + "/istracked", body.IsTracked.ToString());
+                        ScratchWebServer.writeVariable("kinecttracking", "" + bodyCount, (body.IsTracked ? "true" : "false"));
                         if (body.IsTracked)
                         {
                             this.DrawClippedEdges(body, dc);
@@ -410,21 +410,21 @@ namespace bhuylebr.kinect.scratch
                 Brush drawBrush = null;
                 
                 TrackingState trackingState = joints[jointType].TrackingState;
-                ScratchWebServer.writeVariable("kinect", "x/" + joints[jointType].JointType.ToString() + "/" + bodyCount, joints[jointType].Position.X.ToString());
-                ScratchWebServer.writeVariable("kinect", "y/" + joints[jointType].JointType.ToString() + "/" + bodyCount, joints[jointType].Position.Y.ToString());
+                ScratchWebServer.writeVariable("kinect", "x/" + joints[jointType].JointType.ToString() + "/" + bodyCount, (joints[jointType].Position.X * ScratchWebServer.MAXX).ToString());
+                ScratchWebServer.writeVariable("kinect", "y/" + joints[jointType].JointType.ToString() + "/" + bodyCount, (joints[jointType].Position.Y * ScratchWebServer.MAXY).ToString());
                 if (trackingState == TrackingState.Tracked)
                 {
-                    ScratchWebServer.writeVariable("kinect", "istracked/" + joints[jointType].JointType.ToString() + "/" + bodyCount, "TRUE"); 
+                    ScratchWebServer.writeVariable("kinect", "istracked/" + joints[jointType].JointType.ToString() + "/" + bodyCount, "1"); 
                     drawBrush = this.trackedJointBrush;
                 }
                 else if (trackingState == TrackingState.Inferred)
                 {
-                    ScratchWebServer.writeVariable("kinect", "istracked/" + joints[jointType].JointType.ToString() + "/" + bodyCount, "TRUE");
+                    ScratchWebServer.writeVariable("kinect", "istracked/" + joints[jointType].JointType.ToString() + "/" + bodyCount, "1");
                     drawBrush = this.inferredJointBrush;
                 }
                 else
                 {
-                    ScratchWebServer.writeVariable("kinect",  "istracked/" + joints[jointType].JointType.ToString() + "/" + bodyCount, "FALSE"); 
+                    ScratchWebServer.writeVariable("kinect",  "istracked/" + joints[jointType].JointType.ToString() + "/" + bodyCount, "0"); 
                 }
 
                 if (drawBrush != null)

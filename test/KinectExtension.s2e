@@ -1,0 +1,15 @@
+{
+    "extensionName": "KinectExtension",
+    "extensionPort": 8000,
+    "host": "localhost",
+    "blockSpecs": [
+        ["r", "%m.bodypos for %m.bodypart on person %d.bodynumber", "kinect"],
+        ["b", "is  %d.bodynumber found?", "kinecttracking"]
+    ],
+    
+    "menus": {
+		"bodynumber": [ "1", "2", "3", "4", "5", "6" ],
+		"bodypart": [ "FootRight", "AnkleRight", "KneeRight", "FootLeft", "AnkleLeft", "KneeLeft", "HandRight", "ElbowRight", "HandLeft", "ElbowLeft", "Head", "Neck", "SpineBase" ],
+		"bodypos": [ "x", "y", "istracked" ]
+	}
+}
