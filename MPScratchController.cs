@@ -23,7 +23,7 @@ namespace bhuylebr.kinect.scratch
     public class MPScratchController : ApiController
     {
 
-        //owin/katana/webapi seems to construct a new class for each response, so the easiest way to retain data between calls is to make it status
+        //owin/katana/webapi seems to construct a new class for each response, so the easiest way to retain data between calls is to make it static
         //this map stores all message names and their values
         //it can be retrieved using poll (http://localhost:8000/poll) and updated using writemessage (http://localhost:8000/writemessage/name/value)
         private static IDictionary<string, string> scratchVariables = null;
@@ -46,7 +46,8 @@ namespace bhuylebr.kinect.scratch
                 {
                     content.Append(kval.Key);
                     content.Append(" ");
-                    content.AppendLine(kval.Value);
+                    content.Append(kval.Value);
+                    content.Append('\n');
                 }
 
             }

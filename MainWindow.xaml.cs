@@ -377,8 +377,8 @@ namespace bhuylebr.kinect.scratch
 
                             this.DrawBody(bodyCount, joints, jointPoints, dc, drawPen);
 
-                            this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
-                            this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
+                            this.DrawHand(bodyCount, JointType.HandLeft.ToString(), body.HandLeftState, jointPoints[JointType.HandLeft], dc);
+                            this.DrawHand(bodyCount, JointType.HandRight.ToString(), body.HandRightState, jointPoints[JointType.HandRight], dc);
                         }
                         bodyCount++;
                     }
@@ -471,20 +471,29 @@ namespace bhuylebr.kinect.scratch
         /// <param name="handState">state of the hand</param>
         /// <param name="handPosition">position of the hand</param>
         /// <param name="drawingContext">drawing context to draw to</param>
-        private void DrawHand(HandState handState, Point handPosition, DrawingContext drawingContext)
+        private void DrawHand(int bodyCount, string handType, HandState handState, Point handPosition, DrawingContext drawingContext)
         {
             switch (handState)
             {
                 case HandState.Closed:
                     drawingContext.DrawEllipse(this.handClosedBrush, null, handPosition, HandSize, HandSize);
+                    ScratchWebServer.writeVariable("closedHand", handType + "/" + bodyCount, "true");
+                    ScratchWebServer.writeVariable("openHand", handType + "/" + bodyCount, "false");
+                    ScratchWebServer.writeVariable("lassoHand", handType + "/" + bodyCount, "false");
                     break;
 
                 case HandState.Open:
                     drawingContext.DrawEllipse(this.handOpenBrush, null, handPosition, HandSize, HandSize);
+                    ScratchWebServer.writeVariable("closedHand", handType + "/" + bodyCount, "false");
+                    ScratchWebServer.writeVariable("openHand", handType + "/" + bodyCount, "true");
+                    ScratchWebServer.writeVariable("lassoHand", handType + "/" + bodyCount, "false");
                     break;
 
                 case HandState.Lasso:
                     drawingContext.DrawEllipse(this.handLassoBrush, null, handPosition, HandSize, HandSize);
+                    ScratchWebServer.writeVariable("closedHand", handType + "/" + bodyCount, "false");
+                    ScratchWebServer.writeVariable("openHand", handType + "/" + bodyCount, "false");
+                    ScratchWebServer.writeVariable("lassoHand", handType + "/" + bodyCount, "true");
                     break;
             }
         }
