@@ -353,7 +353,7 @@ namespace bhuylebr.kinect.scratch
 
                         if (body.IsTracked)
                         {
-                            ScratchWebServer.writeVariable("kinecttracking", "" + bodyCount, (body.IsTracked ? "true" : "false"));
+                            ScratchWebServer.writeVariable("kinecttracking", "" + bodyCount, "true");
                             this.DrawClippedEdges(body, dc);
 
                             IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
@@ -383,6 +383,14 @@ namespace bhuylebr.kinect.scratch
                             //only increase index if we've written coordinates for a tracked body
                             bodyCount++;
                         }
+                    }
+
+                    //set tracking to "false" for bodies not detected:
+                    //if 6 bodies were tracked earlier, the previous "true" flag needs to be overwritten
+                    while (bodyCount < 7)
+                    {
+                        ScratchWebServer.writeVariable("kinecttracking", "" + bodyCount, "false");
+                        bodyCount++;
                     }
 
                     // prevent drawing outside of our render area
