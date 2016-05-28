@@ -351,9 +351,9 @@ namespace bhuylebr.kinect.scratch
                     {
                         Pen drawPen = this.bodyColors[penIndex++];
 
-                        ScratchWebServer.writeVariable("kinecttracking", "" + bodyCount, (body.IsTracked ? "true" : "false"));
                         if (body.IsTracked)
                         {
+                            ScratchWebServer.writeVariable("kinecttracking", "" + bodyCount, (body.IsTracked ? "true" : "false"));
                             this.DrawClippedEdges(body, dc);
 
                             IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
@@ -379,8 +379,10 @@ namespace bhuylebr.kinect.scratch
 
                             this.DrawHand(bodyCount, JointType.HandLeft.ToString(), body.HandLeftState, jointPoints[JointType.HandLeft], dc);
                             this.DrawHand(bodyCount, JointType.HandRight.ToString(), body.HandRightState, jointPoints[JointType.HandRight], dc);
+
+                            //only increase index if we've written coordinates for a tracked body
+                            bodyCount++;
                         }
-                        bodyCount++;
                     }
 
                     // prevent drawing outside of our render area
