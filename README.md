@@ -15,7 +15,7 @@ http://scratch.mit.edu
 2. double-click .sln file to open with Visual Studio
 3. if Visual Studio complains about missing .NET 4.5, take the following detour:
   * open Visual Studio Installer
-  ** click "modify" for the Visual Studio that you have
+  * click "modify" for the Visual Studio that you have
   * click tab "individual components"
   * check .NET 4.5
   * confirm installation by clicking "modify"
